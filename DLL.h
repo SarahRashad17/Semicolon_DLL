@@ -2,7 +2,7 @@
 * File: DLL.h
 * Author: Sarah Muhammad Rashad
 * Created on 13,August,2024 at 8:30 am
-* 
+*
 */
 
 #ifndef DLL_H
@@ -26,7 +26,7 @@ typedef struct List
 	u32 size;
 }List;
 
-typedef enum 
+typedef enum
 {
 	false,
 	true

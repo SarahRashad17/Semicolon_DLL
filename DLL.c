@@ -2,7 +2,7 @@
 * File: DLL.c
 * Author: Sarah Muhammad Rashad
 * Created on 13,August,2024 at 8:30 am
-* 
+*
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -22,33 +22,35 @@ void insertNode(List* ptrList, u32 index, Data data)
 		printf("Error: Out Of Boundaries\n");
 		return;
 	}
-	
+
 	/* Step2: Create node */
 	Node *newNode = malloc(sizeof(Node));
 	if(newNode == NULL)
 	{
 		printf("No Memory Available\n");
-	   return;
+		return;
 	}
 	/* Step3: Initialize node */
 	newNode->data = data;
 	newNode->next = NULL;
 	newNode->prev = NULL;
-	
+
 	/* Step4: check the index */
 	if(index == 0)
 	{
 		newNode->prev = NULL;
 		newNode->next = ptrList->head;
-		if(ptrList->size != 0) /* if it's not the first node */
+		if(ptrList->head != NULL) /* if it's not the first node */
 		{
 			ptrList->head->prev = newNode;
 		}
 		else {}
 		ptrList->head = newNode;
-		printf("Book inserted successfully!\n\n");
+
+		(ptrList->size)++;
+		printf("Node inserted successfully!\n\n");
 	}
-	
+
 	else if(index == ptrList->size)
 	{
 		Node *temp = ptrList->head;
@@ -59,9 +61,11 @@ void insertNode(List* ptrList, u32 index, Data data)
 		temp->next = newNode;
 		newNode->prev = temp;
 		newNode->next = NULL;
-		printf("Book inserted successfully!\n\n");
+
+		(ptrList->size)++;
+		printf("Node inserted successfully!\n\n");
 	}
-	
+
 	else if(index > 0 && index < ptrList->size)
 	{
 		Node *temp = ptrList->head;
@@ -75,7 +79,7 @@ void insertNode(List* ptrList, u32 index, Data data)
 		temp->next = newNode;
 		(newNode->next)->prev = newNode;
 		(ptrList->size)++;
-		printf("Book inserted successfully!\n\n");
+		printf("Node inserted successfully!\n\n");
 	}
 	else {}
 }
@@ -83,18 +87,24 @@ void insertNode(List* ptrList, u32 index, Data data)
 void printList(List *ptrList)
 {
 	Node *temp = ptrList->head;
+	int i = 0;
 	while(temp != NULL)
 	{
-		printf("%i\n", ptrList->data);
+		printf("%i\n", temp->data);
+		printf("%p\n", temp->next);
 		temp = temp->next;
+	}
 }
 
 void clearList(List *ptrList)
 {
-	while(ptrList->head != NULL)
+	Node *temp = ptrList->head;
+	while(temp != NULL)
 	{
-		head = head->next;
-		free(head->prev);
+		ptrList->head = temp->next;
+		free(temp);
+		temp=ptrList->head;
+		ptrList->size--;
 	}
 }
 
@@ -106,16 +116,16 @@ void deleteNode(List *ptrList, u32 index)
 		printf("Error: Out Of Boundaries\n");
 		return;
 	}
-	
+
 	/* Step2: check the index */
 	if(ptrList->size == 1)
 	{
-		free(ptrList->head)
+		free(ptrList->head);
 	}
 	else if(index == 0)
 	{
 		ptrList->head = ptrList->head->next;
-		free(ptrList->head->prev)
+		free(ptrList->head->prev);
 		ptrList->head->prev = NULL;
 	}
 	else if(index == (ptrList->size)-1)
@@ -145,4 +155,4 @@ void deleteNode(List *ptrList, u32 index)
 	else {}
 	ptrList->size--;
 }
-	
+
