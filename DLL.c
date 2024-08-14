@@ -138,19 +138,17 @@ void deleteNode(List *ptrList, u32 index)
 		temp->prev->next = NULL; /* To be more general: temp->prev->next = temp->next */
         free(temp);
 	}
-	else if(index > 0 && index < (ptrList->size-1))
+	else if(index > 0 && index < (ptrList->size)-1)
 	{
-		Node *temp1 = ptrList->head;
-		Node *temp2 = NULL;
+		Node *temp = ptrList->head;
 		u32 pos = 0;
-		for(pos = 0; pos < index-1; pos++)
+		for(pos = 0; pos < index; pos++)
 		{
-			temp1 = temp1->next;
+			temp = temp->next;
 		}
-		temp2 = temp1->next;
-		temp1->next = temp2->next;
-		temp1->next->prev = temp1;
-		free(temp2);
+		(temp->next)->prev = temp->prev;
+		(temp->prev)->next = temp->next;
+		free(temp);
 	}
 	else {}
 	ptrList->size--;
